@@ -1,4 +1,4 @@
-package com.github.m-afterlike.polaris.init;
+package org.afterlike.polaris.init;
 
 import org.spongepowered.asm.lib.tree.ClassNode;
 import org.spongepowered.asm.mixin.extensibility.IMixinConfigPlugin;

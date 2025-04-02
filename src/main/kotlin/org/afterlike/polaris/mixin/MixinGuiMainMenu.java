@@ -1,4 +1,4 @@
-package com.github.m-afterlike.polaris.mixin;
+package org.afterlike.polaris.mixin;
 
 import net.minecraft.client.gui.GuiMainMenu;
 import org.spongepowered.asm.mixin.Mixin;

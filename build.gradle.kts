@@ -14,6 +14,8 @@ plugins {
 val baseGroup: String by project
 val mcVersion: String by project
 val version: String by project
+val elementaVersion: String by project
+val ucVersion: String by project
 val mixinGroup = "$baseGroup.mixin"
 val modid: String by project
 val transformerFile = file("src/main/resources/accesstransformer.cfg")
@@ -72,7 +74,7 @@ sourceSets.main {
 repositories {
     mavenCentral()
     maven("https://repo.spongepowered.org/maven/")
-    // If you don't want to log in with your real minecraft account, remove this line
+    maven(url = "https://repo.essential.gg/repository/maven-public")
     maven("https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1")
 }
 
@@ -86,6 +88,8 @@ dependencies {
     forge("net.minecraftforge:forge:1.8.9-11.15.1.2318-1.8.9")
 
     shadowImpl(kotlin("stdlib-jdk8"))
+    shadowImpl("gg.essential:elementa:$elementaVersion")
+    shadowImpl("gg.essential:universalcraft-1.8.9-forge:$ucVersion")
 
     // If you don't want mixins, remove these lines
     shadowImpl("org.spongepowered:mixin:0.7.11-SNAPSHOT") {
@@ -93,7 +97,7 @@ dependencies {
     }
     annotationProcessor("org.spongepowered:mixin:0.8.5-SNAPSHOT")
 
-    // If you don't want to log in with your real minecraft account, remove this line
+
     runtimeOnly("me.djtheredstoner:DevAuth-forge-legacy:1.2.1")
 
 }
@@ -152,10 +156,10 @@ tasks.shadowJar {
             println("Copying dependencies into mod: ${it.files}")
         }
     }
-
-    // If you want to include other dependencies and shadow them, you can relocate them in here
     fun relocate(name: String) = relocate(name, "$baseGroup.deps.$name")
+
+    relocate("gg.essential.elementa")
+    relocate("gg.essential.universalcraft")
 }
 
 tasks.assemble.get().dependsOn(tasks.remapJar)
-
